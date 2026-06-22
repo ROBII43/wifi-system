@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Payment Successful</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: #fff;
+    }
+
+    .card {
+        background: rgba(255, 255, 255, 0.08);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+
+        padding: 30px;
+        border-radius: 18px;
+        width: 360px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .check {
+        font-size: 50px;
+        margin-bottom: 10px;
+    }
+
+    h2 {
+        margin: 10px 0;
+        font-size: 22px;
+    }
+
+    p {
+        opacity: 0.85;
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    a.button {
+        display: inline-block;
+        width: 100%;
+        padding: 12px;
+        border-radius: 12px;
+        background: #22c55e;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    a.button:hover {
+        background: #16a34a;
+    }
+
+    .note {
+        margin-top: 12px;
+        font-size: 12px;
+        opacity: 0.7;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="check">✅</div>
+
+    <h2>Payment Successful</h2>
+
+    <p>Your internet is now active</p>
+
+    <a class="button" href="/dashboard">
+        Continue
+    </a>
+
+    <div class="note">
+        You are now connected to the network
+    </div>
+
+</div>
+
+</body>
+</html>

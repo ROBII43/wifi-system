@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Successful</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial;
+    background:#0f172a;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:100vh;
+}
+
+.card{
+    background:#1e293b;
+    padding:35px;
+    border-radius:16px;
+    text-align:center;
+    width:360px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+h1{
+    color:#22c55e;
+    margin-bottom:10px;
+}
+
+.check{
+    font-size:60px;
+    color:#22c55e;
+    margin-bottom:10px;
+}
+
+.info{
+    font-size:14px;
+    opacity:0.85;
+    margin-top:8px;
+}
+
+.btn{
+    margin-top:20px;
+    padding:10px 15px;
+    border:none;
+    border-radius:8px;
+    background:#22c55e;
+    color:white;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.btn:hover{
+    background:#16a34a;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="check">✔</div>
+
+    <h1>Payment Successful</h1>
+
+    <p>Your internet has been activated</p>
+
+    {% if txn %}
+
+        <div class="info">
+            <p><b>Plan:</b> {{ txn.plan }}</p>
+            <p><b>Amount:</b> KES {{ txn.amount }}</p>
+            <p><b>Status:</b> {{ txn.status }}</p>
+            {% if txn.mikrotik_username %}
+                <p><b>Hotspot username:</b> {{ txn.mikrotik_username }}</p>
+            {% endif %}
+            {% if txn.mikrotik_password %}
+                <p><b>Hotspot password:</b> {{ txn.mikrotik_password }}</p>
+            {% endif %}
+            {% if txn.expiry %}
+                <p><b>Valid until:</b> {{ txn.expiry }}</p>
+            {% endif %}
+            {% if not txn.mikrotik_username %}
+                <p style="margin-top:14px; color:#facc15;">If internet does not connect immediately, try refreshing the hotspot portal or contact support.</p>
+            {% endif %}
+        </div>
+
+    {% endif %}
+
+    <button class="btn" onclick="goInternet()">
+        Start Browsing
+    </button>
+
+</div>
+
+<script>
+
+function goInternet(){
+
+    // optional captive portal redirect trick
+    window.location.href = "http://neverssl.com";
+
+}
+
+</script>
+
+</body>
+</html>

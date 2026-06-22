@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logs Monitor</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:#0f172a;
+    color:white;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+    padding:25px;
+}
+
+h1{
+    margin-bottom:10px;
+}
+
+/* FILTER */
+input{
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #334155;
+    background:#1e293b;
+    color:white;
+    margin-bottom:15px;
+}
+
+/* LOG BOX */
+.log-box{
+    background:#1e293b;
+    border-radius:14px;
+    padding:10px;
+    max-height:70vh;
+    overflow:auto;
+}
+
+/* LOG ITEM */
+.log{
+    padding:8px;
+    border-bottom:1px solid #334155;
+    font-family:monospace;
+    font-size:13px;
+}
+
+/* COLORS */
+.system{ color:#38bdf8; }
+.users{ color:#22c55e; }
+.payments{ color:#facc15; }
+
+.badge{
+    font-size:11px;
+    padding:3px 8px;
+    border-radius:20px;
+    margin-right:8px;
+}
+
+.badge.system{ background:#0ea5e9; }
+.badge.users{ background:#22c55e; }
+.badge.payments{ background:#facc15; color:black; }
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>📜 ISP System Logs</h1>
+
+<input id="search" placeholder="Search logs..." onkeyup="filterLogs()">
+
+<div class="log-box" id="logBox">
+
+    {% for log in logs %}
+
+        <div class="log {{ log.type }}">
+            <span class="badge {{ log.type }}">{{ log.type }}</span>
+            {{ log.text }}
+        </div>
+
+    {% endfor %}
+
+</div>
+
+</div>
+
+<script>
+function filterLogs(){
+    let input = document.getElementById("search").value.toLowerCase();
+    let logs = document.querySelectorAll(".log");
+
+    logs.forEach(l => {
+        l.style.display = l.innerText.toLowerCase().includes(input)
+            ? "block"
+            : "none";
+    });
+}
+</script>
+
+</body>
+</html>

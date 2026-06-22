@@ -1,0 +1,60 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}Active Users{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="header">
+        <h1>📶 Active Hotspot Users</h1>
+        <a class="back" href="{{ url_for('admin.dashboard') }}">⬅ Back Dashboard</a>
+    </div>
+
+    <div class="card">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>IP Address</th>
+                    <th>MAC Address</th>
+                    <th>Uptime</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            {% if users %}
+
+                {% for user in users %}
+
+                <tr>
+                    <td>{{ user.user }}</td>
+                    <td>{{ user.address }}</td>
+                    <td>{{ user.mac_address }}</td>
+                    <td>{{ user.uptime }}</td>
+                    <td><span class="badge online">Active</span></td>
+                </tr>
+
+                {% endfor %}
+
+            {% else %}
+
+                <tr>
+                    <td colspan="5">No active users found</td>
+                </tr>
+
+            {% endif %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

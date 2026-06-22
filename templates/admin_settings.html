@@ -1,0 +1,35 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}System Settings{% endblock %}
+
+{% block content %}
+
+<h2>⚙️ System Settings</h2>
+
+{% if message %}
+<div class="success-box">{{ message }}</div>
+{% endif %}
+
+{% if error %}
+<div class="error-box">{{ error }}</div>
+{% endif %}
+
+<form method="POST">
+
+<label for="ip">MikroTik IP</label>
+<input id="ip" class="form-input" name="mikrotik_ip" value="{{ settings.MIKROTIK_HOST or '' }}" placeholder="192.168.88.1" required>
+
+<label for="user">Username</label>
+<input id="user" class="form-input" name="username" value="{{ settings.MIKROTIK_USER or '' }}" required>
+
+<label for="pass">Password</label>
+<input id="pass" class="form-input" name="password" type="password" required>
+
+<label for="session">Session Time (minutes)</label>
+<input id="session" class="form-input" name="session_time" type="number" value="{{ settings.SESSION_DURATION or '' }}">
+
+<button class="btn green" type="submit">Save Settings</button>
+
+</form>
+
+{% endblock %}

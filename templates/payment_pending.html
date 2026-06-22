@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Pending</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#0f172a;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+}
+
+.card{
+    background:#1e293b;
+    padding:30px;
+    border-radius:16px;
+    text-align:center;
+    width:100%;
+    max-width:380px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+h2{
+    margin-bottom:10px;
+}
+
+.loader{
+    width:45px;
+    height:45px;
+    border:4px solid #334155;
+    border-top:4px solid #22c55e;
+    border-radius:50%;
+    margin:20px auto;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    100%{ transform:rotate(360deg); }
+}
+
+.status{
+    margin-top:15px;
+    font-size:14px;
+    opacity:0.9;
+    min-height:20px;
+}
+
+.info{
+    font-size:13px;
+    opacity:0.75;
+    margin-top:5px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border-radius:8px;
+    border:none;
+    margin-top:15px;
+    outline:none;
+    box-sizing:border-box;
+    text-align:center;
+    font-size:15px;
+    background:#0f172a;
+    color:white;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:8px;
+    background:#22c55e;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+    font-size:15px;
+}
+
+button:hover{
+    background:#16a34a;
+}
+
+.timer{
+    margin-top:15px;
+    font-size:12px;
+    opacity:0.7;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>📲 Complete Payment</h2>
+    <p>Check your phone for M-Pesa STK Push</p>
+
+    <div class="loader"></div>
+
+    <p class="info"><b>Phone:</b> {{ phone }}</p>
+    <p class="info"><b>Plan:</b> {{ plan }}</p>
+    <p class="info"><b>Transaction:</b> {{ txn_id }}</p>
+
+    <div class="status" id="statusText">Waiting for payment confirmation...</div>
+
+    <input id="codeInput" placeholder="Enter M-Pesa Receipt Code">
+
+    <button onclick="verifyPayment()">Verify Payment</button>
+
+    <div class="timer" id="timerText">Returning home in 120 seconds if unpaid</div>
+</div>
+
+<script>
+const txnId = "{{ txn_id | default('') | trim }}";
+
+if (!txnId || txnId === "None") {
+    document.getElementById("statusText").textContent = "❌ Invalid transaction ID";
+    throw new Error("Missing txn_id from backend");
+}
+
+let pollInterval = null;
+let countdown = null;
+let seconds = 120;
+
+async function checkPaymentStatus() {
+    try {
+        const response = await fetch(`/pay/status/${encodeURIComponent(txnId)}`);
+        const data = await response.json();
+
+        if (!data.success) {
+            return;
+        }
+
+        const txn = data.transaction;
+
+        if (txn.status === "success") {
+            clearInterval(pollInterval);
+            clearInterval(countdown);
+            document.getElementById("statusText").textContent = "✅ Payment confirmed - activating internet...";
+            setTimeout(() => {
+                window.location.href = "/pay/success?txn_id=" + encodeURIComponent(txnId);
+            }, 1200);
+            return;
+        }
+
+        if (txn.status === "failed") {
+            clearInterval(pollInterval);
+            clearInterval(countdown);
+            document.getElementById("statusText").textContent = "❌ Payment failed. Please try again or contact support.";
+        }
+    } catch (error) {
+        console.error("Status check failed", error);
+    }
+}
+
+function startCountdown() {
+    countdown = setInterval(() => {
+        seconds -= 1;
+        document.getElementById("timerText").textContent = `Returning home in ${seconds} seconds if unpaid`;
+        if (seconds <= 0) {
+            clearInterval(countdown);
+            clearInterval(pollInterval);
+            window.location.href = "/";
+        }
+    }, 1000);
+}
+
+async function verifyPayment() {
+    const code = document.getElementById("codeInput").value.trim().toUpperCase();
+
+    if (!code) {
+        document.getElementById("statusText").textContent = "⚠️ Please enter M-Pesa code";
+        return;
+    }
+
+    document.getElementById("statusText").textContent = "🔍 Verifying payment...";
+
+    try {
+        const res = await fetch("/pay/verify-code", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ txn_id: txnId, code })
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            clearInterval(countdown);
+            clearInterval(pollInterval);
+            document.getElementById("statusText").textContent = "✅ Payment verified successfully";
+            setTimeout(() => {
+                window.location.href = "/pay/success?txn_id=" + encodeURIComponent(txnId);
+            }, 1500);
+            return;
+        }
+
+        document.getElementById("statusText").textContent = "❌ " + (data.message || "Verification failed");
+    } catch (err) {
+        console.error(err);
+        document.getElementById("statusText").textContent = "⚠️ Network error";
+    }
+}
+
+pollInterval = setInterval(checkPaymentStatus, 5000);
+checkPaymentStatus();
+startCountdown();
+</script>
+
+</body>
+</html>

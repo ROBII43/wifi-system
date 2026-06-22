@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>{% block title %}ISP Admin{% endblock %}</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:#0f172a;
+    color:white;
+    display:flex;
+}
+
+/* SIDEBAR */
+.sidebar{
+    width:240px;
+    background:#111827;
+    height:100vh;
+    padding:20px;
+    position:fixed;
+}
+
+.sidebar h2{
+    font-size:18px;
+    margin-bottom:20px;
+}
+
+.nav a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    padding:10px;
+    border-radius:8px;
+    margin-bottom:8px;
+    background:#1e293b;
+    transition:0.2s;
+}
+
+.nav a:hover{
+    background:#334155;
+}
+
+/* MAIN */
+.main{
+    margin-left:260px;
+    padding:25px;
+    width:100%;
+}
+
+/* ACTIVE LINK */
+.nav a.active{
+    background:#2563eb;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <h2>📡 ISP Admin</h2>
+
+    <div class="nav">
+        <a href="/admin/dashboard" class="{% if request.path == '/admin/dashboard' %}active{% endif %}">Dashboard</a>
+        <a href="/admin/users" class="{% if request.path == '/admin/users' %}active{% endif %}">Users</a>
+        <a href="/admin/billing" class="{% if request.path == '/admin/billing' %}active{% endif %}">Billing</a>
+        <a href="/admin/logs" class="{% if request.path == '/admin/logs' %}active{% endif %}">Logs</a>
+        <a href="/admin/settings" class="{% if request.path == '/admin/settings' %}active{% endif %}">Settings</a>
+        <a href="/admin/mikrotik" class="{% if request.path == '/admin/mikrotik' %}active{% endif %}">MikroTik</a>
+        <a href="/admin/troubleshooting" class="{% if request.path == '/admin/troubleshooting' %}active{% endif %}">Troubleshoot</a>
+    </div>
+
+</div>
+
+<div class="main">
+
+    {% block content %}{% endblock %}
+
+</div>
+
+</body>
+</html>

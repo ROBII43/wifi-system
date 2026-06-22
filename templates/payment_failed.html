@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Payment Failed</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.card {
+    background: rgba(255,255,255,0.08);
+    padding: 30px;
+    border-radius: 16px;
+    text-align: center;
+    width: 380px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+h1 {
+    color: #ef4444;
+    margin-bottom: 10px;
+}
+
+p {
+    opacity: 0.8;
+    font-size: 14px;
+}
+
+.error {
+    background: rgba(239,68,68,0.15);
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 15px;
+    font-size: 13px;
+    word-break: break-word;
+}
+
+button {
+    margin-top: 20px;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    background: #ef4444;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #dc2626;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h1>❌ Payment Failed</h1>
+
+    <p>We could not process your payment request.</p>
+
+    {% if error %}
+    <div class="error">
+        {{ error }}
+    </div>
+    {% endif %}
+
+    <a href="/">
+        <button>Try Again</button>
+    </a>
+
+</div>
+
+</body>
+</html>

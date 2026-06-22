@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>{% block title %}ISP Admin{% endblock %}</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:#0f172a;
+    color:white;
+}
+
+.sidebar{
+    width:220px;
+    height:100vh;
+    background:#111827;
+    position:fixed;
+    padding:20px;
+}
+
+.sidebar a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    padding:10px;
+    margin-bottom:8px;
+    background:#1e293b;
+    border-radius:8px;
+}
+
+.main{
+    margin-left:240px;
+    padding:20px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h3>📡 ISP Admin</h3>
+
+    <a href="/admin/dashboard">Dashboard</a>
+    <a href="/admin/users">Users</a>
+    <a href="/admin/billing">Billing</a>
+    <a href="/admin/logs">Logs</a>
+    <a href="/admin/settings">Settings</a>
+    <a href="/admin/mikrotik">MikroTik</a>
+    <a href="/admin/troubleshooting">Troubleshoot</a>
+</div>
+
+<div class="main">
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WiFi Portal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: #fff;
+    }
+
+    .card {
+        background: rgba(255, 255, 255, 0.08);
+        /* Safari safe fallback */
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+
+        padding: 28px;
+        border-radius: 18px;
+        width: 360px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 18px;
+        font-size: 22px;
+    }
+
+    label {
+        display: block;
+        font-size: 13px;
+        margin-top: 12px;
+        opacity: 0.9;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 12px;
+        margin-top: 6px;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+        background: rgba(255,255,255,0.12);
+        color: #fff;
+    }
+
+    input::placeholder {
+        color: #cbd5e1;
+    }
+
+    select option {
+        color: #000;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 18px;
+        border: none;
+        border-radius: 12px;
+        background: #22c55e;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #16a34a;
+    }
+
+    .footer {
+        text-align: center;
+        margin-top: 10px;
+        font-size: 12px;
+        opacity: 0.7;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h2>🌐 WiFi Access Portal</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="/pay">
+
+        <!-- Phone -->
+        <label for="phone">Phone Number</label>
+        <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="07XXXXXXXX"
+            pattern="07[0-9]{8}"
+            required
+            aria-label="Phone number"
+        >
+
+        <!-- Plan -->
+        <label for="plan">Select Internet Plan</label>
+        <select
+            name="plan"
+            id="plan"
+            required
+            aria-label="Internet plan selection"
+        >
+            <option value="">-- Choose Plan --</option>
+            <option value="hourly">1 Hour - 10 KES</option>
+            <option value="daily">Daily - 20 KES</option>
+            <option value="weekly">Weekly - 100 KES</option>
+        </select>
+
+        <!-- MAC hidden field -->
+        <input type="hidden" name="mac" id="mac">
+
+        <button type="submit">Connect Internet</button>
+
+    </form>
+
+    <div class="footer">
+        Powered by ISP Hotspot System
+    </div>
+
+</div>
+
+<script>
+    // MikroTik MAC injection support
+    const params = new URLSearchParams(window.location.search);
+    const mac = params.get("mac");
+
+    if (mac) {
+        document.getElementById("mac").value = mac;
+    }
+</script>
+
+</body>
+</html>

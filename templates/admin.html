@@ -1,0 +1,51 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}ISP Admin Panel{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="header">
+        <h2>📡 ISP Admin Panel</h2>
+        <p>Monitor users, revenue, sessions, and network activity</p>
+    </div>
+
+    <!-- STATS -->
+    <div class="grid">
+
+        <div class="card">
+            <h3>Active Users</h3>
+            <div class="value">128</div>
+        </div>
+
+        <div class="card">
+            <h3>Today's Revenue</h3>
+            <div class="value">KES 3,450</div>
+        </div>
+
+        <div class="card">
+            <h3>Active Sessions</h3>
+            <div class="value">96</div>
+        </div>
+
+        <div class="card">
+            <h3>Blocked Devices</h3>
+            <div class="value">12</div>
+        </div>
+
+    </div>
+
+    <!-- NAVIGATION -->
+    <div class="nav">
+
+        <a href="/admin/users" class="btn blue">Users</a>
+        <a href="/admin/sessions" class="btn green">Sessions</a>
+        <a href="/admin/revenue" class="btn orange">Revenue</a>
+        <a href="/admin/blocked" class="btn red">Blocked MACs</a>
+
+    </div>
+
+</div>
+
+{% endblock %}

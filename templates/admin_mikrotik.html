@@ -1,0 +1,74 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}MikroTik Control Panel{% endblock %}
+
+{% block content %}
+
+<h1>📡 MikroTik Router Control</h1>
+
+<div class="panel-grid">
+
+    <div class="card">
+        <h3>Router Status</h3>
+        <p>Current connection to MikroTik router.</p>
+        <div class="status-pill">{{ status }}</div>
+    </div>
+
+    <div class="card">
+        <h3>Create Hotspot User</h3>
+        <form method="POST" action="{{ url_for('mikrotik.create_hotspot_user') }}">
+            <input class="form-input" type="text" name="username" placeholder="Username" required>
+            <input class="form-input" type="text" name="password" placeholder="Password" required>
+            <input class="form-input" type="text" name="profile" placeholder="Profile (e.g. 5M)" required>
+            <button class="btn green" type="submit">Create User</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h3>Router Actions</h3>
+        <a class="btn green" href="{{ url_for('mikrotik.enable_hotspot') }}">Enable Hotspot</a>
+        <a class="btn red" href="{{ url_for('mikrotik.disable_hotspot') }}">Disable Hotspot</a>
+        <a class="btn yellow" href="{{ url_for('mikrotik.restart_router') }}">Restart Router</a>
+    </div>
+
+</div>
+
+{% endblock %}
+
+<body>
+
+<div class="container">
+
+<h1>📡 MikroTik Router Control</h1>
+
+<div class="card">
+    <h3>Router Status</h3>
+    <p>Status: <b>Connected</b></p>
+</div>
+
+<div class="card">
+    <h3>Create Hotspot User</h3>
+
+    <form method="POST" action="/admin/mikrotik/create-user">
+
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="text" name="password" placeholder="Password" required>
+        <input type="text" name="profile" placeholder="Profile (e.g 5M)" required>
+
+        <button class="start" type="submit">Create User</button>
+
+    </form>
+</div>
+
+<div class="card">
+    <h3>Router Actions</h3>
+
+    <button class="start">Enable Hotspot</button>
+    <button class="stop">Disable Hotspot</button>
+    <button class="restart">Restart Router</button>
+</div>
+
+</div>
+
+</body>
+</html>

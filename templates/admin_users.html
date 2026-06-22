@@ -1,0 +1,35 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}Create User{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <a href="{{ url_for('admin.users') }}" class="back">⬅ Back to Users</a>
+
+    <div class="card">
+        <h2>👤 Create Hotspot User</h2>
+
+        <form method="POST">
+
+            <label for="name">Name</label>
+            <input id="name" class="form-input" name="name" placeholder="John Doe" required>
+
+            <label for="phone">Phone</label>
+            <input id="phone" class="form-input" name="phone" placeholder="07XXXXXXXX" required>
+
+            <label for="plan">Plan</label>
+            <select id="plan" class="form-input" name="plan">
+                <option value="hourly">Hourly</option>
+                <option value="daily">Daily</option>
+            </select>
+
+            <button class="btn green" type="submit">➕ Create User</button>
+
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}

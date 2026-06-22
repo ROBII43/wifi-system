@@ -1,0 +1,41 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}System Logs{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+<h1>📜 ISP System Logs</h1>
+
+<input id="search" class="form-input" placeholder="Search logs..." onkeyup="filterLogs()">
+
+<div class="log-box" id="logBox">
+
+    {% for log in logs %}
+
+        <div class="log {{ log.type }}">
+            <span class="badge {{ log.type }}">{{ log.type }}</span>
+            {{ log.text }}
+        </div>
+
+    {% endfor %}
+
+</div>
+
+</div>
+
+<script>
+function filterLogs(){
+    let input = document.getElementById("search").value.toLowerCase();
+    let logs = document.querySelectorAll(".log");
+
+    logs.forEach(l => {
+        l.style.display = l.innerText.toLowerCase().includes(input)
+            ? "block"
+            : "none";
+    });
+}
+</script>
+
+{% endblock %}

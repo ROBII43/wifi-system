@@ -1,0 +1,4 @@
+LOOKUP TXN1780923332453KT198E
+COLUMNS: ['id', 'phone', 'plan', 'amount', 'status', 'mac', 'mpesa_receipt', 'created_at', 'paid_at', 'active', 'expiry', 'mikrotik_username', 'mikrotik_password', 'mikrotik_status', 'mikrotik_message']
+TOTAL ROWS: 41
+ROW: None

@@ -1,0 +1,45 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}Billing Center{% endblock %}
+
+{% block content %}
+
+<h2>💳 Billing Center</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Total Revenue</h3>
+<div class="value">KES {{ revenue }}</div>
+</div>
+
+<div class="card">
+<h3>Pending Payments</h3>
+<div class="value">{{ pending }}</div>
+</div>
+
+</div>
+
+<table>
+
+<tr>
+<th>Phone</th>
+<th>Plan</th>
+<th>Amount</th>
+<th>Status</th>
+</tr>
+
+{% for t in transactions %}
+
+<tr>
+<td>{{ t.phone }}</td>
+<td>{{ t.plan }}</td>
+<td>KES {{ t.amount }}</td>
+<td><span class="badge {{ t.status }}">{{ t.status }}</span></td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

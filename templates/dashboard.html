@@ -1,0 +1,14 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<h1>📊 Dashboard</h1>
+
+<div>
+    <p>Total Revenue: {{ data.revenue }}</p>
+    <p>Total Transactions: {{ data.total_transactions }}</p>
+</div>
+
+{% endblock %}

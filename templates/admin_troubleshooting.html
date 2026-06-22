@@ -1,0 +1,44 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}Troubleshooting{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="header">
+        <h1>🛠️ System Troubleshooting</h1>
+        <a href="{{ url_for('admin.dashboard') }}" class="back">⬅ Back Dashboard</a>
+    </div>
+
+    <!-- ISSUE LIST -->
+    <div class="grid">
+
+        {% for issue in issues %}
+
+        <div class="card">
+            <h3>⚠️ {{ issue }}</h3>
+            <p>Run diagnostics or check system configuration.</p>
+            <span class="badge warn">Pending Check</span>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- ACTION PANEL -->
+    <div class="actions card">
+
+        <h2>⚡ Quick System Actions</h2>
+
+        <a class="btn" href="{{ url_for('mikrotik.mikrotik_dashboard') }}">MikroTik Status</a>
+        <a class="btn" href="{{ url_for('admin.logs') }}">View Logs</a>
+        <a class="btn" href="{{ url_for('admin.users') }}">Check Users</a>
+        <a class="btn" href="{{ url_for('admin.billing') }}">Check Billing</a>
+        <button class="btn" onclick="alert('Ping test coming soon')">Run Ping Test</button>
+
+    </div>
+
+</div>
+
+{% endblock %}
